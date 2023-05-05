@@ -1,14 +1,17 @@
 package io.kodelabs.devices.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.kodelabs.devices.Utils;
 import io.kodelabs.devices.entities.enums.Status;
 import io.kodelabs.devices.entities.interfaces.DeviceController;
+import jakarta.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class ElectronicDevice implements DeviceController {
+  @Inject Utils utils;
   @JsonIgnore private static String nextId = "10000";
   @JsonIgnore String id;
   // add Hibernate validator, use annotations to make params required
@@ -19,15 +22,7 @@ public class ElectronicDevice implements DeviceController {
   String status;
 
   public ElectronicDevice() {
-    this.id = nextId();
-  }
-
-  // move this to a Util class
-  private String nextId() {
-    int number = Integer.valueOf(this.nextId);
-    number++;
-    nextId = String.valueOf(number);
-    return nextId;
+    this.id = utils.nextId();
   }
 
   @Override
