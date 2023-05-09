@@ -1,4 +1,4 @@
-# spotify
+# electronic-devices
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
