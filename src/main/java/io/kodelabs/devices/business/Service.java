@@ -23,6 +23,9 @@ public class Service {
 
   public Uni<List<ElectronicDevice>> getAll(
       int page, int limit, SortMethod sortMethod, DeviceFieldName fieldName) {
+    if (page <= 0 || limit <= 0) {
+      return Uni.createFrom().failure(new BadRequestException("Invalid page or limit value"));
+    }
     return repository
         .getAll()
         .map(
@@ -49,15 +52,24 @@ public class Service {
         .getById(id)
         .onItem()
         .ifNull()
-        .failWith(new NotFoundException("Device not found with id: " + id));
+        .failWith(() -> new NotFoundException("Device not found with id: " + id))
+        .onFailure(throwable -> throwable instanceof NullPointerException)
+        .transform(t -> new BadRequestException("ID parameter cannot be null"))
+        .onFailure(throwable -> throwable instanceof UnsupportedOperationException)
+        .transform(t -> new BadRequestException("Unsupported operation on device list"));
   }
 
   public Uni<ElectronicDevice> add(CreateModel createModel) {
+    if (createModel == null) {
+      return Uni.createFrom().failure(new BadRequestException("NULLLL"));
+    }
     return repository
         .add(Utils.mapCreateDto(new ElectronicDevice(), createModel))
         .onItem()
         .ifNull()
-        .failWith(new BadRequestException("Cannot add null device"));
+        .failWith(new BadRequestException("Cannot add null device"))
+        .onFailure()
+        .transform(t -> new BadRequestException("NULl"));
   }
 
   public Uni<Void> delete(String id) {

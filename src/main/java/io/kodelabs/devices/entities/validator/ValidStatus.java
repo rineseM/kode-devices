@@ -33,7 +33,7 @@ public @interface ValidStatus {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
       if (value == null) {
-        return true;
+        return false;
       }
       for (Enum<?> enumValue : enumClass.getEnumConstants()) {
         if (enumValue.name().equals(value)) {
