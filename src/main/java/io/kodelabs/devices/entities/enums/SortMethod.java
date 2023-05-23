@@ -4,10 +4,11 @@ import lombok.Getter;
 
 @Getter
 public enum SortMethod {
-    ASCENDING("Ascending"), DESCENDING("Descending");
-    private final String sortMethod;
+  ASCENDING("Ascending"),
+  DESCENDING("Descending");
+  private final String sortMethod;
 
-    private SortMethod(String sortMethod) {
-        this.sortMethod = sortMethod;
-    }
+  private SortMethod(String sortMethod) {
+    this.sortMethod = sortMethod;
+  }
 }

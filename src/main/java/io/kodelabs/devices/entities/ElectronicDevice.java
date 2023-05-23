@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 public class ElectronicDevice implements DeviceController {
     String id;
-    // add Hibernate validator, use annotations to make params required
     String name;
     String manufacturer;
     double price;
